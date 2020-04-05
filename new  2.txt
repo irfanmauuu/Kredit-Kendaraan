@@ -1,0 +1,811 @@
+res=stat.executeQuery("select * from namatable");
+
+while (res.next()) {
+                 
+                 }
+
+JOptionPane.showMessageDialog(rootPane, res.getRow());
+
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import java.sql.*;
+import java.sql.Connection ;
+import java.sql.DriverManager ;
+import javax.swing.table.DefaultTableModel;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+
+
+public class tambahpembeli extends JFrame{
+	private JButton btn_reset, btn_simpan, btn_exit;
+	private JLabel nopem, nama, noiden, alamat, nohp, tglbeli, carabayar;
+	private JLabel tnopem, tnama, tnoiden, talamat, tnohp, ttglbeli, tcarabayar;
+	private JLabel no, nopol, merek, tahun, type, jenis, harga, angsuran6x, angsuran9x, angsuran12x, dp;
+	private JLabel tno, tnopol, tmerek, ttahun, ttype, tjenis, tharga, tangsuran6x, tangsuran9x, tangsuran12x, tdp;
+	private JLabel title = new JLabel ("TAMBAH  PEMBELI  MOTOR");
+	private DefaultTableModel data_ready;
+	private JTextField ino, inopol, imerek, itahun, itype, iharga, i6x, i9x, i12x, idp, ijenis, inopem, inama, inoiden, ialamat, inohp, itglbeli, iket;
+	private JRadioButton ijenis1, ijenis2, ijenis3, ijenis4, ijenis5;
+
+	private JButton btn_cari;
+	private JTextField cari;
+	
+	Date date;
+	SimpleDateFormat sdf ;
+	
+	public void CloseJframe() { super.dispose();}
+	
+	public ResultSet getData(String query) {
+		ResultSet rs = null;
+		try {
+			Connection koneksi = DriverManager.getConnection("jdbc:mysql://localhost:3306/kredit_motor", "root", "");
+			Statement st = koneksi.createStatement();
+			rs = st.executeQuery(query);
+		} catch (Exception sql) {
+			JOptionPane.showMessageDialog(null, sql);
+		}
+		return rs;
+	}
+	
+public tambahpembeli(){
+	super ("APLIKASI KREDIT MOTOR");
+	this.setExtendedState(MAXIMIZED_BOTH);
+	setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage("unsika.png"));
+	
+	Container cont = getContentPane();
+	cont.setLayout(null);
+	cont.setBackground(Color.BLACK);
+	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	title.setBounds(500,-40,500,200);
+	title.setFont(new Font("! PEPSI !",2,30));
+	title.setForeground(Color.WHITE);
+	
+	iket = new JTextField("TERJUAL");
+	iket.setBounds(520,150,200,20);
+	
+	nopem = new JLabel("KODE PEMBELI");
+	nopem.setBounds(190,150,100,20);
+	nopem.setForeground(Color.WHITE);
+	
+	tnopem = new JLabel(":");
+	tnopem.setBounds(290,150,10,20);
+	tnopem.setForeground(Color.WHITE);
+	
+	inopem = new JTextField();
+	inopem.setBounds(320,150,200,20);
+	inopem.setEditable (false);
+	
+	nama = new JLabel("NAMA");
+	nama.setBounds(190,190,100,20);
+	nama.setForeground(Color.WHITE);
+	
+	tnama = new JLabel(":");
+	tnama.setBounds(290,190,10,20);
+	tnama.setForeground(Color.WHITE);
+	
+	inama = new JTextField();
+	inama.setBounds(320,190,200,20);
+	
+	noiden = new JLabel("NO IDENTITAS");
+	noiden.setBounds(190,230,100,20);
+	noiden.setForeground(Color.WHITE);
+	
+	tnoiden = new JLabel(":");
+	tnoiden.setBounds(290, 230,10,20);
+	tnoiden.setForeground(Color.WHITE);
+	
+	inoiden = new JTextField();
+	inoiden.setBounds(320,230,200,20);
+
+	nohp = new JLabel("NO HP/TELEPON");
+	nohp.setBounds(190,270,100,20);
+	nohp.setForeground(Color.WHITE);
+	
+	tnohp = new JLabel(":");
+	tnohp.setBounds(290,270,10,20);
+	tnohp.setForeground(Color.WHITE);
+	
+	inohp = new JTextField();
+	inohp.setBounds(320,270,200,20);
+	
+	alamat = new JLabel("ALAMAT");
+	alamat.setBounds(190,310,100,20);
+	alamat.setForeground(Color.WHITE);
+	
+	talamat = new JLabel(":");
+	talamat.setBounds(290,310,10,20);
+	talamat.setForeground(Color.WHITE);
+	
+	ialamat = new JTextField();
+	ialamat.setBounds(320,310,200,20);
+
+	tglbeli = new JLabel("TANGGAL BELI");
+	tglbeli.setBounds(190,350,100,20);
+	tglbeli.setForeground(Color.WHITE);
+
+	ttglbeli = new JLabel(":");
+	ttglbeli.setBounds(290,350,10,20);
+	ttglbeli.setForeground(Color.WHITE);
+	
+	Date date = new Date();
+	SimpleDateFormat sdf = new SimpleDateFormat ("dd-MM-yyyy") ;
+	itglbeli = new JTextField(sdf.format(date));
+	itglbeli.setBounds(320,350,200,20);
+	itglbeli.setEditable(false);
+	
+	carabayar = new JLabel ("CARA PEMBAYARAN");
+	carabayar.setBounds(190,390,200,20);
+	carabayar.setForeground(Color.WHITE);
+	
+	tcarabayar = new JLabel (":");
+	tcarabayar.setBounds(290,390,50,20);
+	tcarabayar.setForeground(Color.WHITE);
+	
+	ijenis1 = new JRadioButton("CASH");
+	ijenis1.setBounds(320,390,130,20);
+	ijenis1.setBackground(Color.BLACK);
+	ijenis1.setForeground(Color.WHITE);
+	
+	ijenis2 = new JRadioButton("ANGSURAN 6X");
+	ijenis2.setBounds(320,420,130,20);
+	ijenis2.setBackground(Color.BLACK);
+	ijenis2.setForeground(Color.WHITE);
+	
+	ijenis3 = new JRadioButton("ANGSURAN 9X");
+	ijenis3.setBounds(320,450,130,20);
+	ijenis3.setBackground(Color.BLACK);
+	ijenis3.setForeground(Color.WHITE);
+	
+	ijenis4 = new JRadioButton("ANGSURAN 12x");
+	ijenis4.setBounds(320,480,130,20);
+	ijenis4.setBackground(Color.BLACK);
+	ijenis4.setForeground(Color.WHITE);
+	
+	no = new JLabel("NO MOTOR");
+	no.setBounds(690,150,75,20);
+	no.setForeground(Color.WHITE);
+	
+	tno = new JLabel(":");
+	tno.setBounds(790,150,10,20);
+	tno.setForeground(Color.WHITE);
+	
+	ino = new JTextField();
+	ino.setBounds(820,150,145,20);
+	
+	nopol = new JLabel("NO POLISI");
+	nopol.setBounds(690,190,200,20);
+	nopol.setForeground(Color.WHITE);
+	
+	tnopol = new JLabel(":");
+	tnopol.setBounds(790,190,10,20);
+	tnopol.setForeground(Color.WHITE);
+	
+	inopol = new JTextField();
+	inopol.setBounds(820,190,200,20);
+	inopol.setEditable (false);
+	
+	merek = new JLabel ("MEREK");
+	merek.setBounds(690,230,200,20);
+	merek.setForeground(Color.WHITE);
+	
+	tmerek = new JLabel (":");
+	tmerek.setBounds(790,230,10,20);
+	tmerek.setForeground(Color.WHITE);
+	
+	imerek = new JTextField();
+	imerek.setBounds(820,230,200,20);
+	imerek.setEditable (false);
+	
+	tahun = new JLabel("TAHUN");
+	tahun.setBounds(690,270,200,20);
+	tahun.setForeground(Color.WHITE);
+	
+	ttahun = new JLabel(":");
+	ttahun.setBounds(790,270,10,20);
+	ttahun.setForeground(Color.WHITE);
+	
+	itahun = new JTextField();
+	itahun.setBounds(820,270,200,20);
+	itahun.setEditable (false);
+	
+	type = new JLabel ("TYPE");
+	type.setBounds(690,310,200,20);
+	type.setForeground(Color.WHITE);
+	
+	ttype = new JLabel (":");
+	ttype.setBounds(790,310,200,20);
+	ttype.setForeground(Color.WHITE);
+	
+	itype = new JTextField();
+	itype.setBounds(820,310,200,20);
+	itype.setEditable (false);
+
+	jenis = new JLabel ("JENIS");
+	jenis.setBounds(690,350,200,20);
+	jenis.setForeground(Color.WHITE);
+	
+	tjenis = new JLabel (":");
+	tjenis.setBounds(790,350,50,20);
+	tjenis.setForeground(Color.WHITE);
+	
+	ijenis = new JTextField();
+	ijenis.setBounds(820,350,200,20);
+	ijenis.setEditable (false);
+	
+	harga = new JLabel ("HARGA");
+	harga.setBounds(690,390,200,20);
+	harga.setForeground(Color.WHITE);
+	
+	tharga = new JLabel (":");
+	tharga.setBounds(790,390,200,20);
+	tharga.setForeground(Color.WHITE);
+	
+	iharga = new JTextField();
+	iharga.setBounds(820,390,200,20);
+	iharga.setEditable (false);
+	
+	angsuran6x = new JLabel ("ANGSURAN 6X");
+	angsuran6x.setBounds(690,430,200,20);
+	angsuran6x.setForeground(Color.WHITE);
+	
+	tangsuran6x = new JLabel (":");
+	tangsuran6x.setBounds(790,430,200,20);
+	tangsuran6x.setForeground(Color.WHITE);
+	
+	i6x = new JTextField();
+	i6x.setBounds(820,430,200,20);
+	i6x.setEditable (false);
+	
+	angsuran9x = new JLabel ("ANGSURAN 9X");
+	angsuran9x.setBounds(690,470,200,20);
+	angsuran9x.setForeground(Color.WHITE);
+	
+	tangsuran9x = new JLabel (":");
+	tangsuran9x.setBounds(790,470,200,20);
+	tangsuran9x.setForeground(Color.WHITE);
+	
+	i9x = new JTextField();
+	i9x.setBounds(820,470,200,20);
+	i9x.setEditable (false);
+	
+	angsuran12x = new JLabel ("ANGSURAN 12X");
+	angsuran12x.setBounds(690,510,200,20);
+	angsuran12x.setForeground(Color.WHITE);
+	
+	tangsuran12x = new JLabel (":");
+	tangsuran12x.setBounds(790,510,200,20);
+	tangsuran12x.setForeground(Color.WHITE);
+	
+	i12x = new JTextField();
+	i12x.setBounds(820,510,200,20);
+	i12x.setEditable (false);
+	
+	dp = new JLabel ("UANG MUKA");
+	dp.setBounds(690,550,200,20);
+	dp.setForeground(Color.WHITE);
+	
+	tdp = new JLabel (":");
+	tdp.setBounds(790,550,200,20);
+	tdp.setForeground(Color.WHITE);
+	
+	idp = new JTextField("");
+	idp.setBounds(820,550,200,20);
+	idp.setEditable (false);
+	
+	
+	btn_cari = new JButton("CARI");
+	btn_cari.setBounds(965,150,65,20);
+	btn_cari.setToolTipText("MENAMPILKAN DATA MOTOR YANG TERSEDIA");
+	btn_cari.setBackground(Color.RED);
+	btn_cari.setForeground(Color.WHITE);
+	cont.add(btn_cari);
+	
+	btn_simpan = new JButton ("SIMPAN");
+	btn_simpan.setBounds(1100,150,100,40);
+	btn_simpan.setToolTipText("MENYIMPAN DATA");
+	btn_simpan.setBackground(Color.RED);
+	btn_simpan.setForeground(Color.WHITE);
+	
+	btn_reset = new JButton ("RESET");
+	btn_reset.setBounds(1100,250,100,40);
+	btn_reset.setToolTipText("MERESET DATA");
+	btn_reset.setBackground(Color.RED);
+	btn_reset.setForeground(Color.WHITE);
+	
+	btn_exit = new JButton ("EXIT");
+	btn_exit.setBounds(1100,350,100,40);
+	btn_exit.setToolTipText("MENUJU HALAMAN UTAMA");
+	btn_exit.setBackground(Color.RED);
+	btn_exit.setForeground(Color.WHITE);
+	
+	cont.add(title);
+	cont.add(no);
+	cont.add(nopol);
+	cont.add(merek);
+	cont.add(type);
+	cont.add(tahun);
+	cont.add(jenis);
+	cont.add(harga);
+	cont.add(angsuran6x);
+	cont.add(angsuran9x);
+	cont.add(angsuran12x);
+	cont.add(dp);
+	cont.add(nopem);
+	cont.add(nama);
+	cont.add(noiden);
+	cont.add(alamat);
+	cont.add(nohp);
+	cont.add(tglbeli);
+	cont.add(carabayar);
+	cont.add(tno);
+	cont.add(tnopol);
+	cont.add(tmerek);
+	cont.add(ttype);
+	cont.add(ttahun);
+	cont.add(tjenis);
+	cont.add(tharga);
+	cont.add(tangsuran6x);
+	cont.add(tangsuran9x);
+	cont.add(tangsuran12x);
+	cont.add(tdp);
+	cont.add(tnopem);
+	cont.add(tnama);
+	cont.add(tnoiden);
+	cont.add(talamat);
+	cont.add(tnohp);
+	cont.add(ttglbeli);
+	cont.add(tcarabayar);
+	cont.add(ino);
+	cont.add(inopol);
+	cont.add(imerek);
+	cont.add(itype);
+	cont.add(ijenis);
+	cont.add(itahun);
+	cont.add(iharga);
+	cont.add(i6x);
+	cont.add(i9x);
+	cont.add(i12x);
+	cont.add(idp);
+	cont.add(inopem);
+	cont.add(inama);
+	cont.add(inoiden);
+	cont.add(ialamat);
+	cont.add(inohp);
+	cont.add(itglbeli);
+	cont.add(ijenis1);
+	cont.add(ijenis2);
+	cont.add(ijenis3);
+	cont.add(ijenis4);
+	cont.add(btn_simpan);
+	cont.add(btn_reset);
+	cont.add(btn_exit);
+	setVisible(true);
+	
+	try
+				{
+					Connection koneksi = DriverManager.getConnection("jdbc:mysql://localhost:3306/kredit_motor", "root", "");
+					String sql = "SELECT  max(id)FROM data_pembeli ORDER BY id";
+					Statement stat = koneksi.createStatement();
+					ResultSet res = stat.executeQuery(sql);
+					
+					while (res.next()) 
+					{
+						int a = res.getInt (01) ;
+						inopem.setText ("P00" + Integer.toString (a+01));
+					}
+					
+					res.close();
+					koneksi.close();
+				}
+				catch (SQLException ex){
+						JOptionPane.showMessageDialog(rootPane, ex, "ADA YANG EROR!!!", JOptionPane.ERROR_MESSAGE);
+				}
+				
+btn_simpan.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e){	
+			
+			try {
+					Connection koneksi = DriverManager.getConnection("jdbc:mysql://localhost:3306/kredit_motor", "root", "");
+					String sql = "SELECT  max(id)FROM data_pembeli ORDER BY id";
+					Statement stat = koneksi.createStatement();
+					ResultSet res = stat.executeQuery(sql);
+					
+					String p_nopem, p_nama, p_noiden, p_alamat, p_nohp, p_tglbeli, p_bayar, p_sisa, p_ket, p_harga, p_kdmtr;
+					p_nopem= inopem.getText();
+					p_nama = inama.getText();
+					p_noiden = inoiden.getText();
+					p_alamat = ialamat.getText();
+					p_nohp = inohp.getText();
+					p_tglbeli = itglbeli.getText();;
+					p_kdmtr = ino.getText();
+					p_harga = iharga.getText();
+					p_bayar = "";
+					if (ijenis1.isSelected()){ p_bayar = "CASH";}
+					else if (ijenis2.isSelected()){ p_bayar = "6X";}
+						else if (ijenis3.isSelected()){ p_bayar = "9X";}
+							else if (ijenis4.isSelected()){ p_bayar = "12x";}
+					p_sisa = "";
+					if (ijenis1.isSelected()){ p_sisa= "0";}
+					else if (ijenis2.isSelected()){ p_sisa = "6";}
+						else if (ijenis3.isSelected()){ p_sisa = "9";}
+							else if (ijenis4.isSelected()){ p_sisa = "12";}
+					p_ket = iharga.getText();
+					koneksi.createStatement().execute("INSERT INTO data_pembeli (xnopem, xnama, xno_iden, x_alamat, x_nohp, xtgl_beli, xkode_mtr, xharga, xangsuran, xsisa, xket) VALUES ('" + p_nopem + "', '" + p_nama + "', '" + p_noiden + "', '" + p_alamat + "', '" + p_nohp + "', '" + p_tglbeli + "', '" +p_kdmtr+ "', '" + p_harga + "', '" + p_bayar + "', '" + p_sisa +"', '" + p_ket + "')");
+					JOptionPane.showMessageDialog(rootPane, "DATA BERHASIL DISIMPAN", "SUKSES", JOptionPane.INFORMATION_MESSAGE);
+			
+					res.close();
+					koneksi.close();
+
+				}
+				catch (SQLException d){
+						JOptionPane.showMessageDialog(rootPane, d, "SIMPAN DATA KE PEMBELI ADA YANG EROR!!!", JOptionPane.ERROR_MESSAGE);
+				}
+			
+			String x_no, x_nopol, x_merek, x_tahun, x_type, x_harga, x_6x, x_9x, x_12x, x_jenis, x_dp, x_ket;
+					x_no= ino.getText();
+					x_nopol = inopol.getText();
+					x_merek = imerek.getText();
+					x_tahun = itahun.getText();
+					x_type = itype.getText();
+					x_jenis = ijenis.getText();;
+					x_harga = iharga.getText();
+					x_6x = i6x.getText();
+					x_9x = i9x.getText();
+					x_12x = i12x.getText();
+					x_dp = idp.getText();
+					x_ket = iket.getText();
+					
+				try {
+					ResultSet data = getData("SELECT * FROM data_motor WHERE mkode = '" + x_no + "'");
+					if(data.next()) {
+						String sql = "UPDATE data_motor SET mkode = '" + x_no + "', mnopol = '" + x_nopol + "', mmerek = '" + x_merek + "', mtahun = '" + x_tahun + "', mtype = '" + x_type + "', mjenis = '" + x_jenis + "', mharga = '" + x_harga + "',  ma_6x = '" + x_6x + "',  ma_9x = '" + x_9x + "', ma_12x = '" + x_12x + "',  mdp = '" + x_dp + "',  mketerangan = '" + x_ket + "'  WHERE mkode = '" + x_no + "'";
+						try {
+							Connection koneksi = DriverManager.getConnection("jdbc:mysql://localhost:3306/kredit_motor", "root", "");
+							koneksi.createStatement().execute(sql);
+							JOptionPane.showMessageDialog(null, "Berhasil Edit Data");
+							
+						} catch (Exception sqlerror) {
+							JOptionPane.showMessageDialog(null, sqlerror);
+						}
+					} else {
+						JOptionPane.showMessageDialog(null, "Data tidak ada");
+					}
+				} catch(Exception nodata) {
+					JOptionPane.showMessageDialog(null, "Data tidak ada");	
+				}
+			
+				try {
+					Connection koneksi = DriverManager.getConnection("jdbc:mysql://localhost:3306/kredit_motor", "root", "");
+					String sql = "SELECT  max(id)FROM data_terjual ORDER BY id";
+					Statement stat = koneksi.createStatement();
+					ResultSet res = stat.executeQuery(sql);
+					
+					String y_no, y_nopol, y_merek, y_tahun, y_type, y_harga, y_6x, y_9x, y_12x, y_jenis, y_dp, y_ket;
+					y_no= ino.getText();
+					y_nopol = inopol.getText();
+					y_merek = imerek.getText();
+					y_tahun = itahun.getText();
+					y_type = itype.getText();
+					y_jenis = ijenis.getText();;
+					y_harga = iharga.getText();
+					y_6x = i6x.getText();
+					y_9x = i9x.getText();
+					y_12x = i12x.getText();
+					y_dp = idp.getText();
+					y_ket = iket.getText();
+					koneksi.createStatement().execute("INSERT INTO data_terjual (nkode, nnopol, nmerek, ntahun, ntype, njenis, nharga, na_6x, na_9x, na_12x, ndp, nketerangan) VALUES ('" + y_no + "', '" + y_nopol + "', '" + y_merek + "', '" + y_tahun + "', '" + y_type + "', '" + y_jenis + "', '" + y_harga + "', '" + y_6x + "', '" + y_9x +"', '" + y_12x + "', '" + y_dp + "', '" + y_ket+ "')");
+					JOptionPane.showMessageDialog(rootPane, "DATA BERHASIL DISIMPAN", "SUKSES", JOptionPane.INFORMATION_MESSAGE);
+			
+					res.close();
+					koneksi.close();
+					
+					inama.setText("");
+					inoiden.setText("");
+					inohp.setText("");
+					ialamat.setText("");
+					ijenis1.setSelected(false);
+					ijenis2.setSelected(false);
+					ijenis3.setSelected(false);
+					ijenis4.setSelected(false);
+	
+							ino.setText("");
+							inopol.setText("");
+							imerek.setText("");
+							itahun.setText("");
+							ijenis.setText("");
+							itype.setText("");
+							iharga.setText("");
+							i6x.setText("");
+							i9x.setText("");
+							i12x.setText("");
+							idp.setText("");
+
+				}
+				catch (SQLException d){
+						JOptionPane.showMessageDialog(rootPane, d, "SIMPAN DATA KE JUAL ADA YANG EROR!!!", JOptionPane.ERROR_MESSAGE);
+				}
+				
+	try
+				{
+					Connection koneksi = DriverManager.getConnection("jdbc:mysql://localhost:3306/kredit_motor", "root", "");
+					String sql = "SELECT  max(id)FROM data_pembeli ORDER BY id";
+					Statement stat = koneksi.createStatement();
+					ResultSet res = stat.executeQuery(sql);
+					
+					while (res.next()) 
+					{
+						int a = res.getInt (01) ;
+						inopem.setText ("P00" + Integer.toString (a+01));
+					}
+					
+					res.close();
+					koneksi.close();
+				}
+				catch (SQLException ex){
+						JOptionPane.showMessageDialog(rootPane, ex, "ADA YANG EROR!!!", JOptionPane.ERROR_MESSAGE);
+				}
+			
+				}
+		});
+	
+btn_cari.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent e) {
+		
+			Connection connection = null;
+			
+				try{
+				Connection koneksi = DriverManager.getConnection("jdbc:mysql://localhost:3306/kredit_motor", "root", "");
+				Statement stat = koneksi.createStatement();
+				String sql = "Select * from data_motor where mkode like '%" + ino.getText() + "%'";
+				ResultSet res = stat.executeQuery(sql);
+					
+
+					while(res.next()){
+					String tampilkode = res.getString("mkode");
+						String tampilnopol = res.getString("mnopol");
+						String tampilmerek = res.getString("mmerek");
+						String tampiltahun = res.getString("mtahun");
+						String tampiltype = res.getString("mtype");
+						String tampiljenis = res.getString("mjenis");
+						String tampilharga = res.getString("mharga");
+						String tampilang6x = res.getString ("ma_6x") ;
+						String tampilang9x = res.getString ("ma_9x") ;
+						String tampilang12x = res.getString ("ma_12x") ;
+						String tampildp = res.getString ("mdp") ;			
+			
+					ino.setText(tampilkode);
+					inopol.setText(tampilnopol);
+					imerek.setText(tampilmerek);
+					itahun.setText(tampiltahun);
+					itype.setText(tampiltype);
+					ijenis.setText(tampiljenis);
+					iharga.setText(tampilharga);
+					i6x.setText(tampilang6x);
+					i9x.setText(tampilang9x);
+					i12x.setText(tampilang12x);
+					idp.setText(tampildp);
+					
+					}
+				res.close();
+				koneksi.close();
+			} 
+			catch(SQLException x){
+						JOptionPane.showMessageDialog(rootPane, x, "ADA YANG EROR!!!", JOptionPane.ERROR_MESSAGE);
+						}	
+			}
+		});
+		
+btn_reset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					
+					inama.setText("");
+					inoiden.setText("");
+					inohp.setText("");
+					ialamat.setText("");
+					
+					ino.setText("");
+					inopol.setText("");
+					imerek.setText("");
+					itahun.setText("");
+					ijenis.setText("");
+					itype.setText("");
+					iharga.setText("");
+					i6x.setText("");
+					i9x.setText("");
+					i12x.setText("");
+					idp.setText("");
+			}
+		});
+
+btn_exit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					utama utm = new utama();	
+					utm.setVisible(true);
+					dispose();
+			}
+		});
+}
+	
+public static void main (String args[]) {
+	tambahpembeli beli = new tambahpembeli();
+	utama utm = new utama();	
+	beli.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+}
+}
+
+
+
+String d_id, sqli;
+					d_id = ino.getText();
+					sqli = "DELETE FROM data_motor WHERE mkode = '" + d_id +"'";
+					try {
+						Connection koneksi = DriverManager.getConnection("jdbc:mysql://localhost:3306/kredit_motor", "root", "");
+						koneksi.createStatement().execute(sqli);
+					} catch(Exception x) {
+						JOptionPane.showMessageDialog(rootPane, x, "EROR", JOptionPane.ERROR_MESSAGE);
+					}
+					
+					
+	
+	btn_refresh = new JButton("REFRESH");
+	btn_refresh.setBounds(630,130,100,30);
+	btn_refresh.setToolTipText("MENAMPILKAN DATA MOTOR YANG TERSEDIA");
+	btn_refresh.setBackground(Color.RED);
+	btn_refresh.setForeground(Color.WHITE);
+	cont.add(btn_refresh);
+	
+	
+	
+				
+			try {
+					Connection koneksi = DriverManager.getConnection("jdbc:mysql://localhost:3306/kredit_motor", "root", "");
+					String sql = "SELECT  max(id)FROM data_pembeli ORDER BY id";
+					Statement stat = koneksi.createStatement();
+					ResultSet res = stat.executeQuery(sql);
+					
+					String p_nopem, p_nama, p_noiden, p_alamat, p_nohp, p_tglbeli, p_bayar, p_sisa, p_ket, p_harga, p_kdmtr, p_jmlbayar;
+					p_nopem= inopem.getText();
+					p_nama = inama.getText();
+					p_noiden = inoiden.getText();
+					p_alamat = ialamat.getText();
+					p_nohp = inohp.getText();
+					p_tglbeli = itglbeli.getText();;
+					p_kdmtr = ino.getText();
+					p_harga = iharga.getText();
+					p_jmlbayar="";
+					if (ijenis1.isSelected()){ p_jmlbayar =iharga.getText();}
+					else if (ijenis2.isSelected()){ p_jmlbayar = i6x.getText();}
+						else if (ijenis3.isSelected()){ p_jmlbayar = i9x.getText();}
+							else if (ijenis4.isSelected()){ p_jmlbayar = i12x.getText();}
+					p_bayar = "";
+					if (ijenis1.isSelected()){ p_bayar = "CASH";}
+					else if (ijenis2.isSelected()){ p_bayar = "6X";}
+						else if (ijenis3.isSelected()){ p_bayar = "9X";}
+							else if (ijenis4.isSelected()){ p_bayar = "12x";}
+					p_sisa = "";
+					if (ijenis1.isSelected()){ p_sisa= "0";}
+					else if (ijenis2.isSelected()){ p_sisa = "6";}
+						else if (ijenis3.isSelected()){ p_sisa = "9";}
+							else if (ijenis4.isSelected()){ p_sisa = "12";}
+					p_ket = iharga.getText();
+					koneksi.createStatement().execute("INSERT INTO data_pembeli (xnopem, xnama, xno_iden, x_alamat, x_nohp, xtgl_beli, xkode_mtr, xharga, xkredit, xangsuran, xsisa, xket) VALUES ('" + p_nopem + "', '" + p_nama + "', '" + p_noiden + "', '" + p_alamat + "', '" + p_nohp + "', '" + p_tglbeli + "', '" +p_kdmtr+ "', '" + p_harga + "', '" + p_jmlbayar + "', '" + p_bayar + "', '" + p_sisa + "', '" + p_ket + "')");
+					JOptionPane.showMessageDialog(rootPane, "DATA BERHASIL DISIMPAN", "SUKSES", JOptionPane.INFORMATION_MESSAGE);
+			
+					res.close();
+					koneksi.close();
+
+				}
+				catch (SQLException d){
+						JOptionPane.showMessageDialog(rootPane, d, "SIMPAN DATA KE PEMBELI ADA YANG EROR!!!", JOptionPane.ERROR_MESSAGE);
+				}
+			
+				
+				String x_no, x_nopol, x_merek, x_tahun, x_type, x_harga, x_6x, x_9x, x_12x, x_jenis, x_dp, x_ket;
+					x_no= ino.getText();
+					x_nopol = inopol.getText();
+					x_merek = imerek.getText();
+					x_tahun = itahun.getText();
+					x_type = itype.getText();
+					x_jenis = ijenis.getText();;
+					x_harga = iharga.getText();
+					x_6x = i6x.getText();
+					x_9x = i9x.getText();
+					x_12x = i12x.getText();
+					x_dp = idp.getText();
+					x_ket = iket.getText();
+					
+				try {
+					ResultSet data = getData("SELECT * FROM data_motor WHERE mkode = '" + x_no + "'");
+					if(data.next()) {
+						String sql = "UPDATE data_motor SET mkode = '" + x_no + "', mnopol = '" + x_nopol + "', mmerek = '" + x_merek + "', mtahun = '" + x_tahun + "', mtype = '" + x_type + "', mjenis = '" + x_jenis + "', mharga = '" + x_harga + "',  ma_6x = '" + x_6x + "',  ma_9x = '" + x_9x + "', ma_12x = '" + x_12x + "',  mdp = '" + x_dp + "',  mketerangan = '" + x_ket + "'  WHERE mkode = '" + x_no + "'";
+						try {
+							Connection koneksi = DriverManager.getConnection("jdbc:mysql://localhost:3306/kredit_motor", "root", "");
+							koneksi.createStatement().execute(sql);
+							JOptionPane.showMessageDialog(null, "Berhasil Edit Data");
+							
+						} catch (Exception sqlerror) {
+							JOptionPane.showMessageDialog(null, sqlerror);
+						}
+					} else {
+						JOptionPane.showMessageDialog(null, "Data tidak ada");
+					}
+				} catch(Exception nodata) {
+					JOptionPane.showMessageDialog(null, "Data tidak ada");	
+				}
+				
+			
+				try {
+					Connection koneksi = DriverManager.getConnection("jdbc:mysql://localhost:3306/kredit_motor", "root", "");
+					String sql = "SELECT  max(id)FROM data_terjual ORDER BY id";
+					Statement stat = koneksi.createStatement();
+					ResultSet res = stat.executeQuery(sql);
+					
+					String y_no, y_nopol, y_merek, y_tahun, y_type, y_harga, y_6x, y_9x, y_12x, y_jenis, y_dp, y_ket;
+					y_no= ino.getText();
+					y_nopol = inopol.getText();
+					y_merek = imerek.getText();
+					y_tahun = itahun.getText();
+					y_type = itype.getText();
+					y_jenis = ijenis.getText();;
+					y_harga = iharga.getText();
+					y_6x = i6x.getText();
+					y_9x = i9x.getText();
+					y_12x = i12x.getText();
+					y_dp = idp.getText();
+					y_ket = iket.getText();
+					koneksi.createStatement().execute("INSERT INTO data_terjual (nkode, nnopol, nmerek, ntahun, ntype, njenis, nharga, na_6x, na_9x, na_12x, ndp, nketerangan) VALUES ('" + y_no + "', '" + y_nopol + "', '" + y_merek + "', '" + y_tahun + "', '" + y_type + "', '" + y_jenis + "', '" + y_harga + "', '" + y_6x + "', '" + y_9x +"', '" + y_12x + "', '" + y_dp + "', '" + y_ket+ "')");
+					JOptionPane.showMessageDialog(rootPane, "DATA BERHASIL DISIMPAN", "SUKSES", JOptionPane.INFORMATION_MESSAGE);
+			
+					res.close();
+					koneksi.close();
+					
+
+				}
+				catch (SQLException d){
+						JOptionPane.showMessageDialog(rootPane, d, "SIMPAN DATA KE JUAL ADA YANG EROR!!!", JOptionPane.ERROR_MESSAGE);
+				}
+				
+				
+					
+					inama.setText("");
+					inoiden.setText("");
+					inohp.setText("");
+					ialamat.setText("");
+					ijenis1.setSelected(false);
+					ijenis2.setSelected(false);
+					ijenis3.setSelected(false);
+					ijenis4.setSelected(false);
+					
+					ino.setText("");
+					inopol.setText("");
+					imerek.setText("");
+					itahun.setText("");
+					ijenis.setText("");
+					itype.setText("");
+					iharga.setText("");
+					i6x.setText("");
+					i9x.setText("");
+					i12x.setText("");
+					idp.setText("");
+		
+	try
+				{
+					Connection koneksi = DriverManager.getConnection("jdbc:mysql://localhost:3306/kredit_motor", "root", "");
+					String sql = "SELECT  max(id)FROM data_pembeli ORDER BY id";
+					Statement stat = koneksi.createStatement();
+					ResultSet res = stat.executeQuery(sql);
+					
+					while (res.next()) 
+					{
+						int a = res.getInt (01) ;
+						inopem.setText ("P00" + Integer.toString (a+01));
+					}
+					
+					res.close();
+					koneksi.close();
+				}
+				catch (SQLException ex){
+						JOptionPane.showMessageDialog(rootPane, ex, "ADA YANG EROR!!!", JOptionPane.ERROR_MESSAGE);
+				}
