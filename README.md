@@ -1,2 +1,3 @@
 # Kredit-Kendaraan
-Kredit kendaraan (Java) UNSIKA
+Kredit kendaraan menggunakan Java, UNSIKA.
+Desember 2016
